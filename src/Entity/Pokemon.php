@@ -5,9 +5,14 @@ namespace App\Entity;
 use App\Repository\PokemonRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Metadata\ApiFilter;
 
 #[ORM\Entity(repositoryClass: PokemonRepository::class)]
 #[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: ['type' => 'exact', 'genre' => 'exact'])]
+#[ApiFilter(OrderFilter::class, properties: ['type', 'genre', 'name'], arguments: ['orderParameterName' => 'order'])]
 class Pokemon
 {
     #[ORM\Id]
